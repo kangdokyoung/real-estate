@@ -1,6 +1,5 @@
 import {
     atom,
-    atomFamily,
   } from 'recoil';
 
 export const buildingList = atom({

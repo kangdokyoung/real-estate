@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { converse, DetailInformation, selectedBuilding } from "../../Atoms/atom";
+import { converse, DetailInformation } from "../../Atoms/atom";
 
 const Scontainer = styled.div`
     display:flex;
@@ -32,9 +32,8 @@ const ScloseBtn = styled.button`
 `
 
 const Detail = ()=>{
-    const [info, setInfo] = useRecoilState(DetailInformation)
-    const [sel, setSel] = useRecoilState(selectedBuilding);
-    const [conv, setConv] = useRecoilState(converse);
+    const [info, ] = useRecoilState(DetailInformation)
+    const [, setConv] = useRecoilState(converse);
 
     return(
         <>

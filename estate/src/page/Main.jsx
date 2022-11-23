@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import List from "../components/list/List";
+import Maps from "../components/map/Maps";
 
 const Scontainer = styled.div`
     display:flex;
-    flex-direction:column;
 `
 
 
@@ -12,6 +12,7 @@ const Main = ()=>{
 
     return (
         <Scontainer>
+            <Maps />
             <List />
         </Scontainer>
     )

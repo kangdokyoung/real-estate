@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { buildingList, converse, selectedBuilding } from "../../Atoms/atom";
@@ -19,14 +19,10 @@ const SbuildingList = styled.ol`
 `
 
 const Building = ()=>{
-    const [list, setList] = useRecoilState(buildingList);
-    const [conv, setConv] = useRecoilState(converse);
-    const [sel, setSel] = useRecoilState(selectedBuilding);
+    const [list, ] = useRecoilState(buildingList);
+    const [, setConv] = useRecoilState(converse);
+    const [, setSel] = useRecoilState(selectedBuilding);
 
-    useEffect(()=>{
-        console.log(list, sel, conv);
-        
-    },[sel])
     const conversion = (name)=>{
         setSel(name);
         setConv(1);

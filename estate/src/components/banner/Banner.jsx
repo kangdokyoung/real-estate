@@ -52,7 +52,7 @@ const Ssel_year = styled.select`
 `
 
 const Banner = () =>{
-    const [year, setYear] = useState(2015);
+    const [, setYear] = useState(2015);
 
     const changeYear = (e) =>{
         setYear(e.target.value);

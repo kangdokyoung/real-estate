@@ -7,12 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Building from "./Building";
 import { useRecoilState } from "recoil";
-import { buildingList, converse } from "../../Atoms/atom";
+import { converse } from "../../Atoms/atom";
 import Detail from "./Detail";
 
 
 const Scontainer = styled.div`
-    padding: 20px;
+    padding: 9px;
     width: 15vw;
     height: 80vh;
     display:flex;
@@ -23,8 +23,7 @@ const Scontainer = styled.div`
 
 const List = () =>{
     const [sort, setSort] = useState('');
-    const [conv, setConv] = useRecoilState(converse);
-    const [list, setList] = useRecoilState(buildingList);
+    const [conv, ] = useRecoilState(converse);
 
     const handleChange = (e)=>{
         setSort(e.target.value);
@@ -34,7 +33,7 @@ const List = () =>{
         <>
         <Scontainer>
         {
-            conv == 0 && 
+            conv === 0 && 
             <>
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
@@ -56,7 +55,7 @@ const List = () =>{
             </>
         }
         {
-            conv == 1 &&
+            conv === 1 &&
             <Detail />
         }
         </Scontainer>
