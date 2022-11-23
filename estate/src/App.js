@@ -2,7 +2,8 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import Banner from "./components/banner/Banner";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-
+import Main from "./page/Main";
+import { RecoilRoot } from "recoil";
 const GlobalStyle = createGlobalStyle`
   
   *, *::before, *::after {
@@ -14,18 +15,18 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <>
+    <RecoilRoot>
     <GlobalStyle />
     {
       <BrowserRouter>
         <Banner />
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Main />}/>
         </Routes>
       </BrowserRouter>
       
     }
-    </>
+    </RecoilRoot>
   );
 }
 

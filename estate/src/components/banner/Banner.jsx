@@ -46,7 +46,7 @@ const Ssel_year = styled.select`
     font-size: 20px;
     color: black;
     :hover{
-        background-color:lightgrey;
+        background-color:#FFFDFD;
         cursor:pointer;
     }
 `
@@ -55,7 +55,7 @@ const Banner = () =>{
     const [year, setYear] = useState(2015);
 
     const changeYear = (e) =>{
-        setYear(e);
+        setYear(e.target.value);
     }
     return(
         <Scontainer>
@@ -63,7 +63,8 @@ const Banner = () =>{
                 <Link to={'/'} style={{ textDecoration: 'none', color : 'white'}}>Main</Link>
             </Smain>
             
-            <div /><div />
+            <div />
+            <div />
             <Sselect>
                 <Ssel_year type="number" onChange={(e)=>{changeYear(e)}}>
                     <option value="2015">2015</option>
