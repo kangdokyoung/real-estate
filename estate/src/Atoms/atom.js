@@ -62,6 +62,7 @@ default : [
 ]
 });
 
+// 아톰 두개 통일, id값 추가
 export const DetailInformation = atom({
     key : 'list/detailinformation',
     default : 

@@ -64,8 +64,8 @@ const Banner = () =>{
             </Smain>
             
             <div />
-            <div />
-            <Sselect>
+            {/* css로 조정하기 옵션 배열 맵으로 스테이터스로 바꾸기*/}
+            <Sselect>  
                 <Ssel_year type="number" onChange={(e)=>{changeYear(e)}}>
                     <option value="2015">2015</option>
                     <option value="2016">2016</option>
