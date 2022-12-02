@@ -4,6 +4,7 @@ import Banner from "./components/banner/Banner";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Main from "./page/Main";
 import { RecoilRoot } from "recoil";
+import Graph from "./components/graph/Graph";
 const GlobalStyle = createGlobalStyle`
   
   *, *::before, *::after {
@@ -22,6 +23,7 @@ function App() {
         <Banner />
         <Routes>
           <Route path="/" element={<Main />}/>
+          <Route path="/graph" element={<Graph />}/>
         </Routes>
       </BrowserRouter>
       

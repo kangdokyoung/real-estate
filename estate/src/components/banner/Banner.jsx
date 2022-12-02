@@ -31,10 +31,13 @@ const Sgraph = styled.div`
 const Sselect = styled.div`
     display:flex;
     flex-direction:column;
-    justify-content:center
+    justify-content:center;
+    margin-left: 400px;
+    margin-right: 200px;
+    border:none;
 `
 
-const Ssel_year = styled.select`
+const SselYear = styled.select`
     width: 80px;
     height: 40px;
     text-align: center;
@@ -50,34 +53,39 @@ const Ssel_year = styled.select`
         cursor:pointer;
     }
 `
-
+// 배너에 글씨 테두리 회색으로 해놓으면 가독성 좋아짐
 const Banner = () =>{
     const [, setYear] = useState(2015);
 
     const changeYear = (e) =>{
         setYear(e.target.value);
     }
+
+    const yearOption = [
+        { value : 2015, data : 2015 },
+        { value : 2016, data : 2016 },
+        { value : 2017, data : 2017 },
+        { value : 2018, data : 2018 },
+        { value : 2019, data : 2019 },
+        { value : 2020, data : 2020 },
+        { value : 2021, data : 2021 },
+        { value : 2022, data : 2022 },
+    ]
     return(
         <Scontainer>
             <Smain>
                 <Link to={'/'} style={{ textDecoration: 'none', color : 'white'}}>Main</Link>
             </Smain>
             
-            <div />
             {/* css로 조정하기 옵션 배열 맵으로 스테이터스로 바꾸기*/}
             <Sselect>  
-                <Ssel_year type="number" onChange={(e)=>{changeYear(e)}}>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                </Ssel_year>
+                <SselYear type="number" onChange={(e)=>{changeYear(e)}}>
+                    {yearOption.map((option, i) =>(
+                        <option key={i} value={option.value}>{option.data}</option>
+                        ))
+                    }
+                </SselYear>
             </Sselect>
-            <div />
             <Sgraph>
                 <Link to={'/graph'} style={{ textDecoration: 'none', color : 'white'}}>Graph</Link>
             </Sgraph>

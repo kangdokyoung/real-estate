@@ -21,16 +21,6 @@ const Sdetail = styled.div`
     }
 `
 
-const ScloseBtn = styled.button`
-    width: 80px;
-    border: 1px solid #FFFDFD:
-    border-radius: 12px;
-    margin-top:15px;
-    :hover{
-        cursor:pointer;
-    }
-`
-
 const Detail = ()=>{
     const [info, ] = useRecoilState(DetailInformation)
     const [, setConv] = useRecoilState(converse);
@@ -38,7 +28,7 @@ const Detail = ()=>{
     return(
         <>
         <Scontainer>
-            <Sdetail>
+            <Sdetail onClick={()=>{setConv(0)}}>
                 이름: {info.name} <br />
                 주소: {info.adress} <br />
                 자치구 명: {info.place} <br />
@@ -53,9 +43,6 @@ const Detail = ()=>{
                 건축 용도: {info.for} <br />
                 접수 연도: {info.regist} <br />
             </Sdetail>
-            <ScloseBtn onClick={()=>{setConv(0)}}>
-                닫기
-            </ScloseBtn>
         </Scontainer>
         </>
     )
