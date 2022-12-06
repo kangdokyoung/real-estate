@@ -76,8 +76,7 @@ const Banner = () =>{
             <Smain>
                 <Link to={'/'} style={{ textDecoration: 'none', color : 'white'}}>Main</Link>
             </Smain>
-            
-            {/* css로 조정하기 옵션 배열 맵으로 스테이터스로 바꾸기*/}
+
             <Sselect>  
                 <SselYear type="number" onChange={(e)=>{changeYear(e)}}>
                     {yearOption.map((option, i) =>(
