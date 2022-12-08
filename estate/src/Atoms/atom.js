@@ -65,22 +65,7 @@ default : [
 // 아톰 두개 통일, id값 추가 -> 지금은 더미 데이터라 그냥 두고 나중에 백 붙일 때 하나로 통일하는 걸로 바꿀 예정
 export const DetailInformation = atom({
     key : 'list/detailinformation',
-    default : 
-        {
-            name: 'o',
-            count: 0,
-            rise: 0,
-            price: 3.05,
-            adress:'abc',
-            place: 'ㅇㅇ구',
-            contract: 11.23,
-            barea: 1,
-            larea: 2,
-            floor: 3,
-            build: 11.23,
-            for: '아파트',
-            regist: 11.23,
-        }
+    default : []
 });
 
 export const converse = atom({

@@ -3,7 +3,11 @@ import { useState } from "react";
 import { CustomOverlayMap, Map, MapMarker, Polygon, ZoomControl } from "react-kakao-maps-sdk";
 import { useJson } from "./useJson";
 import styled from "styled-components";
-import { ThemeProvider } from "styled-components"; // 넣어보기
+//import { ThemeProvider } from "styled-components"; // 넣어보기
+import { useEffect } from "react";
+import axios from 'axios';
+import { DetailInformation } from "../../Atoms/atom";
+import { useRecoilState } from "recoil";
 
 const Sdiv = styled.div`
   position:relative;
@@ -33,7 +37,18 @@ const Maps = () => {
     });
     const [overLay, setOverLay] = useState(0);
     const [polygon, setPolygon] = useState(true);
+    const [info, setInfo] = useRecoilState(DetailInformation);
 
+    useEffect(()=>{
+      axios({
+        url: 'http://localhost:2005/readAll',
+        method: 'post',
+        withCredentials: true,
+      }).then((res)=>{
+        console.log(res.data.data);
+        setInfo(res.data.data);
+      })
+    },[])
 
     const changePolygon = ()=>{
       if (polygon === true) {
