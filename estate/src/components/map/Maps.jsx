@@ -6,8 +6,9 @@ import styled from "styled-components";
 //import { ThemeProvider } from "styled-components"; // 넣어보기
 import { useEffect } from "react";
 import axios from 'axios';
-import { DetailInformation } from "../../Atoms/atom";
+import { DetailInformation, selectedYear } from "../../Atoms/atom";
 import { useRecoilState } from "recoil";
+import { useMarker } from "./useMarker";
 
 const Sdiv = styled.div`
   position:relative;
@@ -38,17 +39,20 @@ const Maps = () => {
     const [overLay, setOverLay] = useState(0);
     const [polygon, setPolygon] = useState(true);
     const [info, setInfo] = useRecoilState(DetailInformation);
+    const [markerList] = useMarker(info);
+    const [marker,setMarker] = useState(markerList);
+    const [year, setYear] = useRecoilState(selectedYear);
 
     useEffect(()=>{
       axios({
-        url: 'http://localhost:2005/readAll',
-        method: 'post',
+        url: `http://localhost:2005/readAll/${year}`,
+        method: 'get',
         withCredentials: true,
       }).then((res)=>{
         console.log(res.data.data);
         setInfo(res.data.data);
       })
-    },[])
+    },[year])
 
     const changePolygon = ()=>{
       if (polygon === true) {
@@ -77,9 +81,9 @@ const Maps = () => {
         })}
       >
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        <MapMarker position={{ lat: 37.541, lng: 126.986 }}>
-          <div style={{ color: "#000" }}>맵 띄움</div>
-        </MapMarker>
+        {marker && marker.map((data, i)=>
+          <MapMarker position={data.location} />
+        )}
         {polygon === true && area.map((area, index)=>(
           <Polygon
           key={`polygon-${area.name}`}
@@ -122,6 +126,9 @@ const Maps = () => {
       <SpolygonButton onClick={()=>{changePolygon()}}>
           폴리곤
       </SpolygonButton>
+      <button onClick={()=>{console.log(markerlist)}}>
+        ddddddd
+      </button>
     </>
   );
 };

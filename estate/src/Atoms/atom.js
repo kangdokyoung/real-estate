@@ -77,3 +77,8 @@ export const selectedBuilding = atom({
     key: 'list/selectedbuilding',
     default: ''
 })
+
+export const selectedYear = atom({
+    key: 'map/selectedyear',
+    default: 2015,
+})

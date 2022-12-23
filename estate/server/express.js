@@ -26,6 +26,6 @@ app.listen(2005, ()=>{console.log(`server run in 2005`)});
 const {readAll} = require('./read/readAll');
 
 //-------------------------------------------------------------
-app.post('/readAll', (req, res)=>{
+app.get('/readAll/:year', (req, res)=>{
     readAll(req,res)
 })

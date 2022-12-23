@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { selectedYear } from "../../Atoms/atom";
 
 const  Scontainer = styled.div`
     display:flex;
@@ -8,6 +10,12 @@ const  Scontainer = styled.div`
     height: 10vh;
     width: 100%;
     background-color: #68EDFF;
+`
+
+const Stext = styled.div`
+    color: white;
+    font-size:35px;
+    -webkit-text-stroke: 0.5px grey;
 `
 
 const Smain = styled.div`
@@ -55,10 +63,11 @@ const SselYear = styled.select`
 `
 // 배너에 글씨 테두리 회색으로 해놓으면 가독성 좋아짐
 const Banner = () =>{
-    const [, setYear] = useState(2015);
+    const [year, setYear] = useRecoilState(selectedYear);
 
     const changeYear = (e) =>{
         setYear(e.target.value);
+        console.log('year = ',year);
     }
 
     const yearOption = [
@@ -74,7 +83,7 @@ const Banner = () =>{
     return(
         <Scontainer>
             <Smain>
-                <Link to={'/'} style={{ textDecoration: 'none', color : 'white'}}>Main</Link>
+                <Link to={'/'} style={{ textDecoration: 'none', color : 'white'}}><Stext>Main</Stext></Link>
             </Smain>
 
             <Sselect>  
@@ -86,7 +95,7 @@ const Banner = () =>{
                 </SselYear>
             </Sselect>
             <Sgraph>
-                <Link to={'/graph'} style={{ textDecoration: 'none', color : 'white'}}>Graph</Link>
+                <Link to={'/graph'} style={{ textDecoration: 'none', color : 'white'}}><Stext>Graph</Stext></Link>
             </Sgraph>
         </Scontainer>
     )
