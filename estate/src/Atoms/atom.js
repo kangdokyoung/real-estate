@@ -1,5 +1,5 @@
 import {
-    atom,
+    atom, selector,
   } from 'recoil';
 
 export const buildingList = atom({
@@ -81,4 +81,33 @@ export const selectedBuilding = atom({
 export const selectedYear = atom({
     key: 'map/selectedyear',
     default: 2015,
+})
+
+
+export const filteredInformation = selector({
+    key: 'filteredInformation',
+    get: ({get})=>{
+        const list = get(DetailInformation);
+
+        let nameList = list.map((data, i) =>{
+            const nameData = data.건물명
+            return nameData;
+        })
+    
+        let location = list.map((data, i)=>{
+            const locData = {lng: data.y, lat: data.x};
+            return locData;
+        })
+    
+        let markerlist =  list.map((data, i)=>{
+            return{
+                name: nameList[i],
+                isMouseover: false,
+                location: location[i],
+            }
+        })
+
+        return markerlist;
+
+    }
 })

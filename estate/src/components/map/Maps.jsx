@@ -6,9 +6,8 @@ import styled from "styled-components";
 //import { ThemeProvider } from "styled-components"; // 넣어보기
 import { useEffect } from "react";
 import axios from 'axios';
-import { DetailInformation, selectedYear } from "../../Atoms/atom";
-import { useRecoilState } from "recoil";
-import { useMarker } from "./useMarker";
+import { DetailInformation, filteredInformation, selectedYear } from "../../Atoms/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const Sdiv = styled.div`
   position:relative;
@@ -18,8 +17,8 @@ const Sdiv = styled.div`
 
 const SpolygonButton = styled.button`
   position: absolute;
-  width: 200px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
   background-color:white;
   border: 1px solid black;
   z-index:100;
@@ -28,20 +27,39 @@ const SpolygonButton = styled.button`
   }
 `
 
+const SmarkerButton = styled.button`
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background-color:white;
+  border: 1px solid black;
+  z-index:100;
+  top: 120px;
+  :hover{
+    cursor:pointer;
+  }
+`
+
 const Maps = () => {
     const { kakao } = window;
+    //폴리곤 좌표
     const [polygonList] = useJson();
     const [area, setArea] = useState(polygonList);
-    const [mousePosition, setMousePosition] = useState({
+
+    const [mousePosition, setMousePosition] = useState({ // 마우스 좌표 
       lat: 0,
       lng: 0,
     });
-    const [overLay, setOverLay] = useState(0);
-    const [polygon, setPolygon] = useState(true);
-    const [info, setInfo] = useRecoilState(DetailInformation);
-    const [markerList] = useMarker(info);
-    const [marker,setMarker] = useState(markerList);
-    const [year, setYear] = useRecoilState(selectedYear);
+    const [overLay, setOverLay] = useState(0); //폴리곤 오버레이 
+    const [markerOpen, setMarkerOpen] = useState(0); //마커 오버레이
+
+    const [polygon, setPolygon] = useState(true); // 폴리곤 on/off
+    const [marker, setMarker] = useState(true); // 마커 on/off
+
+    const [, setInfo] = useRecoilState(DetailInformation); // 데이터 atom으로 옮기는
+
+    const [year, ] = useRecoilState(selectedYear); // 년도 
+    const [marker1, setMarker1] = useRecoilState(filteredInformation); // 마커 가공 
 
     useEffect(()=>{
       axios({
@@ -63,6 +81,15 @@ const Maps = () => {
       console.log(polygon);
     }
 
+    const changeMarker = ()=>{
+      if (marker === true) {
+        setMarker(false);
+      }else{
+        setMarker(true);
+      }
+      console.log(marker);
+    }
+
   return (
     <>
       <Map
@@ -81,9 +108,35 @@ const Maps = () => {
         })}
       >
         <ZoomControl position={kakao.maps.ControlPosition.TOPRIGHT} />
-        {marker && marker.map((data, i)=>
-          <MapMarker position={data.location} />
+
+        {marker === true && marker1.map((data, i)=>
+          <MapMarker 
+          position={data.location}
+          key={i}
+          onMouseOver={()=>{
+            setMarker1((prev)=>[
+              ...prev.filter((_,i)=> i !== i),
+              {
+                ...prev[i],
+                isMouseover: true,
+              },
+            ])
+            console.log(data);
+          }}
+          onMouseOut={()=>{
+            setMarker1((prev)=>[
+              ...prev.filter((_,i)=> i !== i),
+              {
+                ...prev[i],
+                isMouseover: false,
+              },
+            ])
+          }}
+          >
+            {data.isMouseover === true && <div style={{ padding: "5px", color: "#000" }}>{data.name}</div>}
+          </MapMarker>
         )}
+
         {polygon === true && area.map((area, index)=>(
           <Polygon
           key={`polygon-${area.name}`}
@@ -117,6 +170,7 @@ const Maps = () => {
           }
         />
         ))}
+
         {overLay === 1 && polygon === true && (
           <CustomOverlayMap position={mousePosition} zIndex={-1000} yAnchor={1}>
             <Sdiv className="area">{area.find((v)=>v.isMouseover).name}</Sdiv>
@@ -126,7 +180,11 @@ const Maps = () => {
       <SpolygonButton onClick={()=>{changePolygon()}}>
           폴리곤
       </SpolygonButton>
-      <button onClick={()=>{console.log(markerlist)}}>
+      <SmarkerButton onClick={()=>{changeMarker()}}>
+          마커
+      </SmarkerButton>
+      {/*********************************************************** 버튼 지우기 ********************************************************/}
+      <button onClick={()=>{console.log(marker1)}}> 
         ddddddd
       </button>
     </>
