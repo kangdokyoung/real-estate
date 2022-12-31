@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { buildingList, converse, selectedBuilding } from "../../Atoms/atom";
+import { converse, dataSort, DetailInformation, informationCount, selectedBuilding } from "../../Atoms/atom";
 
 const Slist = styled.li`
     display:flex;
@@ -19,27 +19,37 @@ const SbuildingList = styled.ol`
 `
 
 const Building = ()=>{
-    const [list, ] = useRecoilState(buildingList);
+    const [list, ] = useRecoilState(DetailInformation);
     const [, setConv] = useRecoilState(converse);
     const [, setSel] = useRecoilState(selectedBuilding);
+    const [infoCount] = useRecoilState(informationCount);
+    const [sort, ] = useRecoilState(dataSort);
 
-    const conversion = (name)=>{
-        setSel(name);
+    const conversion = (id)=>{
+        setSel(id);
         setConv(1);
     }
 
     return(
         <>
         <Slist>
-            {list.map((data, i)=>{
+            {sort != 'count' && list.map((data, i)=>{
                 return(
-                    <SbuildingList key={i} onClick={()=>{conversion(data.name)}}>
-                        이름: {data.name} <br />
-                        거래 횟수: {data.count}회 <br />
-                        가격 상승률: {data.rise}% <br />
-                        건물 가격: {data.price}억
+                    <SbuildingList key={i} onClick={()=>{conversion(data.id)}}>
+                        이름: {data.건물명} <br />
+                        건축 년도: {data.건축년도} <br />
+                        건물 위치: {data.법정동명} <br />
+                        건물 가격: {data.물건금액}만
                     </SbuildingList>
                 )   
+            })}
+            {sort == 'count' && infoCount.map((data, i)=>{
+                return(
+                    <SbuildingList key={i} onClick={()=>{conversion(data.id)}}>
+                        이름: {data.건물명} <br />
+                        거래 횟수: {data["COUNT(*)"]}
+                    </SbuildingList>
+                )
             })}
 
         </Slist>

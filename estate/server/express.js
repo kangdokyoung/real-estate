@@ -24,8 +24,18 @@ app.listen(2005, ()=>{console.log(`server run in 2005`)});
 //-------------------------------------------------------------
 
 const {readAll} = require('./read/readAll');
+const { readCount } = require('./read/readCount');
+const { readSort } = require('./read/readSort');
 
 //-------------------------------------------------------------
 app.get('/readAll/:year', (req, res)=>{
     readAll(req,res)
+})
+
+app.get('/readCount', (req, res)=>{
+    readCount(req,res)
+})
+
+app.get('/readSort/:year/:sort', (req, res)=>{
+    readSort(req,res)
 })

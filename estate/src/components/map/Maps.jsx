@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import axios from 'axios';
 import { DetailInformation, filteredInformation, selectedYear } from "../../Atoms/atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 const Sdiv = styled.div`
   position:relative;
@@ -15,26 +15,28 @@ const Sdiv = styled.div`
   width: 0px;
 `
 
-const SpolygonButton = styled.button`
+const SonoffButton = styled.div`
   position: absolute;
+  z-index: 100;
+  display:flex;
+  flex-direction:column;
+`
+
+const SpolygonButton = styled.button`
   width: 100px;
   height: 40px;
   background-color:white;
   border: 1px solid black;
-  z-index:100;
   :hover{
     cursor:pointer;
   }
 `
 
 const SmarkerButton = styled.button`
-  position: absolute;
   width: 100px;
   height: 40px;
   background-color:white;
   border: 1px solid black;
-  z-index:100;
-  top: 120px;
   :hover{
     cursor:pointer;
   }
@@ -51,7 +53,7 @@ const Maps = () => {
       lng: 0,
     });
     const [overLay, setOverLay] = useState(0); //폴리곤 오버레이 
-    const [markerOpen, setMarkerOpen] = useState(0); //마커 오버레이
+    // const [markerOpen, setMarkerOpen] = useState(0); //마커 오버레이
 
     const [polygon, setPolygon] = useState(true); // 폴리곤 on/off
     const [marker, setMarker] = useState(true); // 마커 on/off
@@ -114,23 +116,10 @@ const Maps = () => {
           position={data.location}
           key={i}
           onMouseOver={()=>{
-            setMarker1((prev)=>[
-              ...prev.filter((_,i)=> i !== i),
-              {
-                ...prev[i],
-                isMouseover: true,
-              },
-            ])
-            console.log(data);
+            data.isMouseover = true;
           }}
           onMouseOut={()=>{
-            setMarker1((prev)=>[
-              ...prev.filter((_,i)=> i !== i),
-              {
-                ...prev[i],
-                isMouseover: false,
-              },
-            ])
+            data.isMouseover = false;
           }}
           >
             {data.isMouseover === true && <div style={{ padding: "5px", color: "#000" }}>{data.name}</div>}
@@ -177,16 +166,15 @@ const Maps = () => {
           </CustomOverlayMap>
         )}
       </Map>
-      <SpolygonButton onClick={()=>{changePolygon()}}>
-          폴리곤
-      </SpolygonButton>
-      <SmarkerButton onClick={()=>{changeMarker()}}>
-          마커
-      </SmarkerButton>
-      {/*********************************************************** 버튼 지우기 ********************************************************/}
-      <button onClick={()=>{console.log(marker1)}}> 
-        ddddddd
-      </button>
+
+      <SonoffButton>
+        <SpolygonButton onClick={()=>{changePolygon()}}>
+            폴리곤
+        </SpolygonButton>
+        <SmarkerButton onClick={()=>{changeMarker()}}>
+            마커
+        </SmarkerButton>
+      </SonoffButton>
     </>
   );
 };
