@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { converse, dataSort, DetailInformation, informationCount, selectedBuilding } from "../../Atoms/atom";
+import { converse, dataSort, DetailInformation, informationCount, markerOverlay, selectedBuilding } from "../../Atoms/atom";
 
 const Slist = styled.li`
     display:flex;
@@ -25,6 +25,8 @@ const Building = ()=>{
     const [infoCount] = useRecoilState(informationCount);
     const [sort, ] = useRecoilState(dataSort);
 
+    const [markerOver, setMarkerOver] = useRecoilState(markerOverlay); //마커 오버레이
+
     const conversion = (id)=>{
         setSel(id);
         setConv(1);
@@ -35,7 +37,15 @@ const Building = ()=>{
         <Slist>
             {sort != 'count' && list.map((data, i)=>{
                 return(
-                    <SbuildingList key={i} onClick={()=>{conversion(data.id)}}>
+                    <SbuildingList key={i}
+                    onClick={()=>{conversion(data.id)}}
+                    onMouseOver={()=>{
+                        setMarkerOver(data.id)
+                    }}
+                    onMouseOut={()=>{
+                        setMarkerOver('')
+                    }}
+                    >
                         이름: {data.건물명} <br />
                         건축 년도: {data.건축년도} <br />
                         건물 위치: {data.법정동명} <br />

@@ -6,7 +6,7 @@ import styled from "styled-components";
 //import { ThemeProvider } from "styled-components"; // 넣어보기
 import { useEffect } from "react";
 import axios from 'axios';
-import { DetailInformation, filteredInformation, selectedYear } from "../../Atoms/atom";
+import { converse, DetailInformation, filteredInformation, markerOverlay, selectedBuilding, selectedYear } from "../../Atoms/atom";
 import { useRecoilState } from "recoil";
 
 const Sdiv = styled.div`
@@ -53,7 +53,7 @@ const Maps = () => {
       lng: 0,
     });
     const [overLay, setOverLay] = useState(0); //폴리곤 오버레이 
-    // const [markerOpen, setMarkerOpen] = useState(0); //마커 오버레이
+    const [markerOver, setMarkerOver] = useRecoilState(markerOverlay); //마커 오버레이
 
     const [polygon, setPolygon] = useState(true); // 폴리곤 on/off
     const [marker, setMarker] = useState(true); // 마커 on/off
@@ -63,6 +63,9 @@ const Maps = () => {
     const [year, ] = useRecoilState(selectedYear); // 년도 
     const [marker1, setMarker1] = useRecoilState(filteredInformation); // 마커 가공 
 
+    const [, setConv] = useRecoilState(converse); // 건물 상세정보 변경
+    const [, setSel] = useRecoilState(selectedBuilding); // 선택된 건물 id
+ 
     useEffect(()=>{
       axios({
         url: `http://localhost:2005/readAll/${year}`,
@@ -92,6 +95,11 @@ const Maps = () => {
       console.log(marker);
     }
 
+    const conversion = (id)=>{
+      setSel(id);
+      setConv(1);
+  }
+
   return (
     <>
       <Map
@@ -116,13 +124,16 @@ const Maps = () => {
           position={data.location}
           key={i}
           onMouseOver={()=>{
-            data.isMouseover = true;
+            setMarkerOver(data.id);
           }}
           onMouseOut={()=>{
-            data.isMouseover = false;
+            setMarkerOver('');
+          }}
+          onClick={()=>{
+            conversion(data.id)
           }}
           >
-            {data.isMouseover === true && <div style={{ padding: "5px", color: "#000" }}>{data.name}</div>}
+            {markerOver === data.id && <div style={{ padding: "5px", color: "#000" }}>{data.name}</div>}
           </MapMarker>
         )}
 

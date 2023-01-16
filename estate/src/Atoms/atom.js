@@ -47,16 +47,25 @@ export const filteredInformation = selector({
             const locData = {lng: data.y, lat: data.x};
             return locData;
         })
+        let id = list.map((data, i)=>{
+            const idData = data.id
+            return idData;
+        })
     
         let markerlist =  list.map((data, i)=>{
             return{
                 name: nameList[i],
-                isMouseover: false,
                 location: location[i],
+                id: id[i],
             }
         })
 
         return markerlist;
 
     }
+})
+
+export const markerOverlay = atom({
+    key: 'maps/markeroverlay',
+    default: '',
 })
