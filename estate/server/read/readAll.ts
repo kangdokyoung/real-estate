@@ -1,4 +1,5 @@
-const mysql = require('mysql');
+import { Request, Response } from 'express';
+import mysql from 'mysql';
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -6,7 +7,7 @@ const con = mysql.createConnection({
     database: "seoul",
 })
 
-exports.readAll = (req,res)=>{
+exports.readAll = (req:Request,res:Response)=>{
     let year = req.params.year;
     con.query('SELECT * FROM seoul.building where 접수연도 = ?',[year], (error, row1, fields)=>{
         if(error) throw error;

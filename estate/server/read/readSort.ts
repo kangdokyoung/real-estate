@@ -1,4 +1,5 @@
-const mysql = require('mysql');
+import { Request, Response } from 'express';
+import mysql from 'mysql';
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -6,7 +7,7 @@ const con = mysql.createConnection({
     database: "seoul",
 })
 
-exports.readSort = (req,res)=>{
+exports.readSort = (req:Request,res:Response)=>{
     let year = req.params.year;
     let sort = req.params.sort;
     if (sort === 'name') {

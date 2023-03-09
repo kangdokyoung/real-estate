@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { converse, DetailInformation, selectedBuilding } from "../../Atoms/atom";
+import { Data } from "../../Atoms/atom";
 
 const Scontainer = styled.div`
     display:flex;
@@ -27,10 +28,10 @@ const Detail = ()=>{
     const [info, ] = useRecoilState(DetailInformation);
     const [selected] = useRecoilState(selectedBuilding);
     const [, setConv] = useRecoilState(converse);
-    const [view, setView] = useState({});
+    const [view, setView] = useState<any>({}); // 바꿔야함
 
     useEffect(()=>{
-        if (selected === '') {
+        if (selected === 0) {
             setView({});
             console.log('비어있음');
         }else{
