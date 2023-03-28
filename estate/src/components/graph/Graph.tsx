@@ -6,9 +6,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useRecoilState } from "recoil";
 import { selectedYear } from "../../Atoms/atom";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 const Scontainer = styled.div`
   display:flex;
@@ -25,6 +26,10 @@ const SdefChart = styled.div`
   height: 82vh;
   text-align:center;
 `
+type GraphData = {
+  success:number,
+  data: { 자치구명: string, 'COUNT(*)':number}[]
+}
 
 const Graph = ()=>{
     const [sort, setSort] = useState('');
@@ -36,7 +41,7 @@ const Graph = ()=>{
         },
       };
 
-      const handleChange = (e)=>{
+      const handleChange = (e:SelectChangeEvent<string>)=>{
         setSort(e.target.value);
       }
 
@@ -47,8 +52,8 @@ const Graph = ()=>{
             url: `http://localhost:2005/readChart/${year}/${sort}`,
             method: 'get',
             withCredentials: true,
-          }).then((res)=>{
-            console.log(res.data.data);
+          }).then((res:AxiosResponse<GraphData>)=>{
+            console.log(res);
             setChartData(res.data.data.map((data)=>Object.values(data)));
           })
         }
@@ -64,7 +69,6 @@ const Graph = ()=>{
               chartType="Bar"
               width="88%"
               height="82vh"
-              margin='0px'
               data={[["지역", "거래횟수"], ...chartData]}
               options={option}
           />}

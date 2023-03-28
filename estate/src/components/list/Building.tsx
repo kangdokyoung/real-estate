@@ -27,7 +27,7 @@ const Building = ()=>{
 
     const [markerOver, setMarkerOver] = useRecoilState(markerOverlay); //마커 오버레이
 
-    const conversion = (id)=>{
+    const conversion = (id:number)=>{
         setSel(id);
         setConv(1);
     }
@@ -43,7 +43,7 @@ const Building = ()=>{
                         setMarkerOver(data.id)
                     }}
                     onMouseOut={()=>{
-                        setMarkerOver('')
+                        setMarkerOver(0)
                     }}
                     >
                         이름: {data.건물명} <br />

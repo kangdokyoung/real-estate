@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 import axios from 'axios';
 import { converse, DetailInformation, filteredInformation, markerOverlay, selectedBuilding, selectedYear } from "../../Atoms/atom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const Sdiv = styled.div`
   position:relative;
@@ -61,7 +61,7 @@ const Maps = () => {
     const [, setInfo] = useRecoilState(DetailInformation); // 데이터 atom으로 옮기는
 
     const [year, ] = useRecoilState(selectedYear); // 년도 
-    const [marker1, setMarker1] = useRecoilState(filteredInformation); // 마커 가공 
+    const marker1 = useRecoilValue(filteredInformation); // 마커 가공 
 
     const [, setConv] = useRecoilState(converse); // 건물 상세정보 변경
     const [, setSel] = useRecoilState(selectedBuilding); // 선택된 건물 id
@@ -95,7 +95,7 @@ const Maps = () => {
       console.log(marker);
     }
 
-    const conversion = (id)=>{
+    const conversion = (id:number)=>{
       setSel(id);
       setConv(1);
   }
@@ -127,7 +127,7 @@ const Maps = () => {
             setMarkerOver(data.id);
           }}
           onMouseOut={()=>{
-            setMarkerOver('');
+            setMarkerOver(0);
           }}
           onClick={()=>{
             conversion(data.id)

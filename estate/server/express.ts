@@ -1,7 +1,9 @@
-const express = require('express');
-const app = express();
+import express from "express";
+import mysql from 'mysql';
+import helmet from "helmet";
+import cors from 'cors';
 
-const mysql = require('mysql');
+const app = express();
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -10,10 +12,8 @@ const connection = mysql.createConnection({
 })
 connection.connect();
 
-const helmet = require('helmet');
 app.use(helmet());
 
-const cors = require('cors');
 app.use(cors({
     origin: true, credentials: true
 }))

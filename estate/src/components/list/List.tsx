@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Building from "./Building";
 import { useRecoilState } from "recoil";
 import { converse, dataSort, DetailInformation, informationCount, selectedYear } from "../../Atoms/atom";
@@ -29,7 +29,7 @@ const List = () =>{
     const [, setInfo] = useRecoilState(DetailInformation); // 데이터 atom으로 옮기는
     const [year, ] = useRecoilState(selectedYear); // 년도 
 
-    const handleChange = (e)=>{
+    const handleChange = (e:SelectChangeEvent<string>)=>{
         setSort(e.target.value);
     }
 

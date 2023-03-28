@@ -65,7 +65,7 @@ const SselYear = styled.select`
 const Banner = () =>{
     const [year, setYear] = useRecoilState(selectedYear);
 
-    const changeYear = (e) =>{
+    const changeYear = (e:React.ChangeEvent<HTMLSelectElement>) =>{
         setYear(e.target.value);
         console.log('year = ',year);
     }
@@ -87,7 +87,7 @@ const Banner = () =>{
             </Smain>
 
             <Sselect>  
-                <SselYear type="number" onChange={(e)=>{changeYear(e)}}>
+                <SselYear onChange={changeYear}>
                     {yearOption.map((option, i) =>(
                         <option key={i} value={option.value}>{option.data}</option>
                         ))
